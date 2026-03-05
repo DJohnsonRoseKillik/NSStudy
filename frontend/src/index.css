@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0D0D12;
+  --color-accent: #FFFFFF;
+  --color-bg-dark: #1d1d1b;
+  --color-silver: #A1A1AA;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-white overflow-x-hidden selection:bg-accent selection:text-primary;
+  }
+}
+
+/* Global Noise Overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+/* Magnetic Button Utility */
+.magnetic-btn {
+  @apply relative overflow-hidden transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.03];
+}
+
+.magnetic-btn span {
+  @apply absolute inset-0 bg-white/20 translate-y-full transition-transform duration-500 ease-out;
+}
+
+.magnetic-btn:hover span {
+  @apply translate-y-0;
+}
+
+/* Glassmorphism */
+.glass {
+  @apply bg-primary/60 backdrop-blur-xl border border-white/10;
+}
+
+/* Custom Hide Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0D12;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}

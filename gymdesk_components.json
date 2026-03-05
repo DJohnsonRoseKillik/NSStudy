@@ -1,0 +1,697 @@
+{
+  "source": "https://www.newschoolbjjlondon.co.uk",
+  "generated_at": "2026-03-05 16:23:29",
+  "pricing": [
+    {
+      "id": "16611",
+      "title": "1 Month Trial \u00a320",
+      "amount": "20.00",
+      "currency": "\u00a3",
+      "frequency": "",
+      "details": [
+        "1 month",
+        "Unlimited",
+        "Fundamentals Program"
+      ],
+      "signup_url": "https://www.newschoolbjjlondon.co.uk/signup?membership=17224&type=1"
+    },
+    {
+      "id": "10467",
+      "title": "Kids Intro Programme 4 Month Bundle (5% off)",
+      "amount": "300.00",
+      "currency": "\u00a3",
+      "frequency": "",
+      "details": [
+        "4 months",
+        "Unlimited",
+        "Fundamentals Program, Kids Skills Checker"
+      ],
+      "signup_url": "https://www.newschoolbjjlondon.co.uk/signup?membership=48307&type=1"
+    },
+    {
+      "id": "10469",
+      "title": "Kids Deposit",
+      "amount": "100.00",
+      "currency": "\u00a3",
+      "frequency": "",
+      "details": [
+        "1 month",
+        "Unlimited",
+        "Kids Skills Checker"
+      ],
+      "signup_url": "https://www.newschoolbjjlondon.co.uk/signup?membership=48309&type=1"
+    },
+    {
+      "id": "2275",
+      "title": "1 Lesson Drop In fee",
+      "amount": "15.00",
+      "currency": "\u00a3",
+      "frequency": "",
+      "details": [
+        "Ongoing",
+        "1 Session"
+      ],
+      "signup_url": "https://www.newschoolbjjlondon.co.uk/signup?membership=15009&type=2"
+    },
+    {
+      "id": "2003",
+      "title": "2 Classes Per Week",
+      "amount": "70.00",
+      "currency": "\u00a3",
+      "frequency": "/ Month",
+      "details": [
+        "Ongoing",
+        "2 Days / week",
+        "Advanced Program, Fundamentals Program"
+      ],
+      "signup_url": "https://www.newschoolbjjlondon.co.uk/signup?membership=13525&type=2"
+    },
+    {
+      "id": "2425",
+      "title": "Unlimited Brixton",
+      "amount": "95.00",
+      "currency": "\u00a3",
+      "frequency": "/ Month",
+      "details": [
+        "Ongoing",
+        "Unlimited"
+      ],
+      "signup_url": "https://www.newschoolbjjlondon.co.uk/signup?membership=14982&type=2"
+    }
+  ],
+  "schedule": [
+    {
+      "id": 569355,
+      "title": "Gi- FUNDAMENTALS",
+      "date": "2026-03-02",
+      "start": "07:00:00",
+      "duration_minutes": 60,
+      "booked": 3,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 1015411,
+      "title": "Gi ADVANCED",
+      "date": "2026-03-02",
+      "start": "11:00:00",
+      "duration_minutes": 120,
+      "booked": 0,
+      "capacity": 25,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 254521,
+      "title": "Cubs 4+",
+      "date": "2026-03-02",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 0,
+      "capacity": 20,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 367710,
+      "title": "Monday - Cubs 4-7 Free Trial",
+      "date": "2026-03-02",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 0,
+      "capacity": 6,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 254527,
+      "title": "Juniors 8+",
+      "date": "2026-03-02",
+      "start": "17:00:00",
+      "duration_minutes": 45,
+      "booked": 1,
+      "capacity": 20,
+      "bookable": false,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 367711,
+      "title": "Monday Juniors 8-12 Free Trial",
+      "date": "2026-03-02",
+      "start": "17:00:00",
+      "duration_minutes": 45,
+      "booked": 0,
+      "capacity": 6,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 471288,
+      "title": "Beginners",
+      "date": "2026-03-02",
+      "start": "18:00:00",
+      "duration_minutes": 60,
+      "booked": 10,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161786,
+      "title": "Gi- Fundamentals",
+      "date": "2026-03-02",
+      "start": "19:00:00",
+      "duration_minutes": 60,
+      "booked": 6,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves",
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 739736,
+      "title": "Gi Sparring- MIXED LEVELS",
+      "date": "2026-03-02",
+      "start": "20:00:00",
+      "duration_minutes": 75,
+      "booked": 2,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves",
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 569338,
+      "title": "Gi- FUNDAMENTALS",
+      "date": "2026-03-03",
+      "start": "07:00:00",
+      "duration_minutes": 60,
+      "booked": 7,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161509,
+      "title": "Gi- ADVANCED",
+      "date": "2026-03-03",
+      "start": "11:00:00",
+      "duration_minutes": 120,
+      "booked": 1,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 254549,
+      "title": "Cubs Fundamentals 4+",
+      "date": "2026-03-03",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 1,
+      "capacity": 20,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 254535,
+      "title": "Juniors Advanced 8+",
+      "date": "2026-03-03",
+      "start": "17:00:00",
+      "duration_minutes": 45,
+      "booked": 1,
+      "capacity": 20,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161510,
+      "title": "No Gi- Fundamentals",
+      "date": "2026-03-03",
+      "start": "18:00:00",
+      "duration_minutes": 90,
+      "booked": 1,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Hejraat Rashid"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 77102,
+      "title": "No Gi- Mixed Levels",
+      "date": "2026-03-03",
+      "start": "19:45:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Hejraat Rashid"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 569347,
+      "title": "No Gi- MIXED LEVELS",
+      "date": "2026-03-04",
+      "start": "07:00:00",
+      "duration_minutes": 60,
+      "booked": 1,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Olly Jones"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 1369787,
+      "title": "Gi - Advanced",
+      "date": "2026-03-04",
+      "start": "11:00:00",
+      "duration_minutes": 60,
+      "booked": 0,
+      "capacity": 1,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161584,
+      "title": "Wrestling / Coach Junior",
+      "date": "2026-03-04",
+      "start": "12:00:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Junior"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 356943,
+      "title": "Cubs 4+",
+      "date": "2026-03-04",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 1,
+      "capacity": 20,
+      "bookable": false,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 381181,
+      "title": "Wednesday - Cubs 4-7 Free Trial",
+      "date": "2026-03-04",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 0,
+      "capacity": 6,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 356944,
+      "title": "Juniors 8+",
+      "date": "2026-03-04",
+      "start": "17:00:00",
+      "duration_minutes": 45,
+      "booked": 0,
+      "capacity": 25,
+      "bookable": false,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 381182,
+      "title": "Wednesday - Juniors 8-12 Free Trial",
+      "date": "2026-03-04",
+      "start": "17:00:00",
+      "duration_minutes": 45,
+      "booked": 0,
+      "capacity": 6,
+      "bookable": false,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 471290,
+      "title": "Gi Class- ADVANCED",
+      "date": "2026-03-04",
+      "start": "18:00:00",
+      "duration_minutes": 90,
+      "booked": 3,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 970477,
+      "title": "ADVANCED- Sparring",
+      "date": "2026-03-04",
+      "start": "19:30:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 568640,
+      "title": "Gi- FUNDAMENTALS",
+      "date": "2026-03-05",
+      "start": "07:00:00",
+      "duration_minutes": 60,
+      "booked": 4,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161589,
+      "title": "Gi- ADVANCED",
+      "date": "2026-03-05",
+      "start": "11:00:00",
+      "duration_minutes": 120,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": false,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 254537,
+      "title": "Cubs 4+",
+      "date": "2026-03-05",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 0,
+      "capacity": 20,
+      "bookable": true,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 381183,
+      "title": "Thursday - Cubs 4-7 Free Trial",
+      "date": "2026-03-05",
+      "start": "16:15:00",
+      "duration_minutes": 30,
+      "booked": 0,
+      "capacity": 6,
+      "bookable": true,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 254539,
+      "title": "Juniors 8+",
+      "date": "2026-03-05",
+      "start": "17:00:00",
+      "duration_minutes": 45,
+      "booked": 0,
+      "capacity": 20,
+      "bookable": true,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 471291,
+      "title": "Beginners",
+      "date": "2026-03-05",
+      "start": "18:00:00",
+      "duration_minutes": 60,
+      "booked": 9,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161591,
+      "title": "Gi - Fundamentals",
+      "date": "2026-03-05",
+      "start": "19:00:00",
+      "duration_minutes": 60,
+      "booked": 7,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 161787,
+      "title": "Gi Comp Class- Fundamentals",
+      "date": "2026-03-05",
+      "start": "20:00:00",
+      "duration_minutes": 75,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 569349,
+      "title": "No Gi- MIXED LEVELS",
+      "date": "2026-03-06",
+      "start": "07:00:00",
+      "duration_minutes": 60,
+      "booked": 2,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Olly Jones"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 393856,
+      "title": "Gi- FUNDAMENTALS",
+      "date": "2026-03-06",
+      "start": "11:00:00",
+      "duration_minutes": 120,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Leonardo Neves"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 723728,
+      "title": "Beginners",
+      "date": "2026-03-06",
+      "start": "18:00:00",
+      "duration_minutes": 60,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 1264054,
+      "title": "Gi- Fundamentals",
+      "date": "2026-03-06",
+      "start": "19:00:00",
+      "duration_minutes": 90,
+      "booked": 3,
+      "capacity": 40,
+      "bookable": true,
+      "instructors": [
+        "Leonardo Neves",
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 970507,
+      "title": "Kids Cubs and Juniors Mixed",
+      "date": "2026-03-07",
+      "start": "09:30:00",
+      "duration_minutes": 45,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 381185,
+      "title": "Saturday - Cubs Juniors Mixed",
+      "date": "2026-03-07",
+      "start": "09:30:00",
+      "duration_minutes": 45,
+      "booked": 0,
+      "capacity": 6,
+      "bookable": true,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 723729,
+      "title": "Kids Advanced",
+      "date": "2026-03-07",
+      "start": "10:15:00",
+      "duration_minutes": 30,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 569352,
+      "title": "Gi- MIXED LEVELS",
+      "date": "2026-03-07",
+      "start": "11:00:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 569354,
+      "title": "No Gi/ Wrestling- MIXED LEVELS",
+      "date": "2026-03-07",
+      "start": "12:45:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Bernardo Rosalba"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 1207498,
+      "title": "Teens class",
+      "date": "2026-03-07",
+      "start": "16:00:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 15,
+      "bookable": true,
+      "instructors": [
+        "Tyler Jackson Dawkins"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 1229137,
+      "title": "Strength and Conditioning For JiuJitsu",
+      "date": "2026-03-08",
+      "start": "11:30:00",
+      "duration_minutes": 60,
+      "booked": 1,
+      "capacity": 25,
+      "bookable": true,
+      "instructors": [],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 648018,
+      "title": "Gi mixed levels BJJ",
+      "date": "2026-03-08",
+      "start": "13:00:00",
+      "duration_minutes": 90,
+      "booked": 0,
+      "capacity": 1,
+      "bookable": false,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    },
+    {
+      "id": 544757,
+      "title": "Gi- MIXED LEVELS",
+      "date": "2026-03-08",
+      "start": "13:00:00",
+      "duration_minutes": 90,
+      "booked": 3,
+      "capacity": 30,
+      "bookable": true,
+      "instructors": [
+        "Reiss Bailey"
+      ],
+      "booking_url": "https://www.newschoolbjjlondon.co.uk/book"
+    }
+  ]
+}

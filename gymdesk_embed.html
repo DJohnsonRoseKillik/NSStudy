@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gymdesk Components</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #18202b;
+      --muted: #5a6676;
+      --line: #dde4ef;
+      --brand: #0f2638;
+      --brand-alt: #0b8fd8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.45;
+    }
+    .ns-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+    h1, h2, h3, h4 { margin: 0 0 10px; }
+    .ns-note {
+      background: #eef6ff;
+      border: 1px solid #c9defa;
+      color: #1f4366;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+    .ns-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .ns-card, .ns-event, .ns-day {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .ns-card {
+      padding: 16px;
+    }
+    .price {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 4px 0 10px;
+    }
+    .freq {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .ns-card ul {
+      margin: 0 0 14px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .ns-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .ns-btn.secondary {
+      background: var(--brand-alt);
+    }
+    .ns-day {
+      padding: 14px;
+      margin-top: 14px;
+    }
+    .ns-events {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .ns-event {
+      padding: 12px;
+    }
+    .ns-event .time {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .ns-event .meta {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .ns-tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #f2f4f7;
+      color: #5d6675;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="ns-wrap">
+    <h1>Extracted Gymdesk Components</h1>
+    <p class="ns-note">Synced: 2026-03-05 16:23:29 UTC. Source: <a href="https://www.newschoolbjjlondon.co.uk" target="_blank" rel="noopener noreferrer">https://www.newschoolbjjlondon.co.uk</a>. Direct iframe embedding is blocked by source headers, so these are extracted components.</p>
+
+    <section>
+      <h2>Pricing</h2>
+      <div class="ns-grid">
+        
+            <article class="ns-card">
+              <h3>1 Month Trial &#163;20</h3>
+              <p class="price">&#163;20.00</p>
+              <ul><li>1 month</li><li>Unlimited</li><li>Fundamentals Program</li></ul>
+              <a class="ns-btn" href="https://www.newschoolbjjlondon.co.uk/signup?membership=17224&amp;type=1" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            </article>
+            
+            <article class="ns-card">
+              <h3>Kids Intro Programme 4 Month Bundle (5% off)</h3>
+              <p class="price">&#163;300.00</p>
+              <ul><li>4 months</li><li>Unlimited</li><li>Fundamentals Program, Kids Skills Checker</li></ul>
+              <a class="ns-btn" href="https://www.newschoolbjjlondon.co.uk/signup?membership=48307&amp;type=1" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            </article>
+            
+            <article class="ns-card">
+              <h3>Kids Deposit</h3>
+              <p class="price">&#163;100.00</p>
+              <ul><li>1 month</li><li>Unlimited</li><li>Kids Skills Checker</li></ul>
+              <a class="ns-btn" href="https://www.newschoolbjjlondon.co.uk/signup?membership=48309&amp;type=1" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            </article>
+            
+            <article class="ns-card">
+              <h3>1 Lesson Drop In fee</h3>
+              <p class="price">&#163;15.00</p>
+              <ul><li>Ongoing</li><li>1 Session</li></ul>
+              <a class="ns-btn" href="https://www.newschoolbjjlondon.co.uk/signup?membership=15009&amp;type=2" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            </article>
+            
+            <article class="ns-card">
+              <h3>2 Classes Per Week</h3>
+              <p class="price">&#163;70.00 <span class="freq">/ Month</span></p>
+              <ul><li>Ongoing</li><li>2 Days / week</li><li>Advanced Program, Fundamentals Program</li></ul>
+              <a class="ns-btn" href="https://www.newschoolbjjlondon.co.uk/signup?membership=13525&amp;type=2" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            </article>
+            
+            <article class="ns-card">
+              <h3>Unlimited Brixton</h3>
+              <p class="price">&#163;95.00 <span class="freq">/ Month</span></p>
+              <ul><li>Ongoing</li><li>Unlimited</li></ul>
+              <a class="ns-btn" href="https://www.newschoolbjjlondon.co.uk/signup?membership=14982&amp;type=2" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            </article>
+            
+      </div>
+    </section>
+
+    <section>
+      <h2>Schedule</h2>
+      
+            <section class="ns-day">
+              <h3>2026-03-02</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">7:00 AM (60 min)</p>
+                  <h4>Gi- FUNDAMENTALS</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 3/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">11:00 AM (120 min)</p>
+                  <h4>Gi ADVANCED</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 0/25</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Cubs 4+</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/20</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Monday - Cubs 4-7 Free Trial</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/6</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">5:00 PM (45 min)</p>
+                  <h4>Juniors 8+</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 1/20</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">5:00 PM (45 min)</p>
+                  <h4>Monday Juniors 8-12 Free Trial</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/6</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">6:00 PM (60 min)</p>
+                  <h4>Beginners</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 10/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">7:00 PM (60 min)</p>
+                  <h4>Gi- Fundamentals</h4>
+                  <p class="meta">Coach: Leonardo Neves, Reiss Bailey | Spots: 6/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">8:00 PM (75 min)</p>
+                  <h4>Gi Sparring- MIXED LEVELS</h4>
+                  <p class="meta">Coach: Leonardo Neves, Reiss Bailey | Spots: 2/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section class="ns-day">
+              <h3>2026-03-03</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">7:00 AM (60 min)</p>
+                  <h4>Gi- FUNDAMENTALS</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 7/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">11:00 AM (120 min)</p>
+                  <h4>Gi- ADVANCED</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 1/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Cubs Fundamentals 4+</h4>
+                  <p class="meta">Coach: TBA | Spots: 1/20</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">5:00 PM (45 min)</p>
+                  <h4>Juniors Advanced 8+</h4>
+                  <p class="meta">Coach: TBA | Spots: 1/20</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">6:00 PM (90 min)</p>
+                  <h4>No Gi- Fundamentals</h4>
+                  <p class="meta">Coach: Hejraat Rashid | Spots: 1/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">7:45 PM (90 min)</p>
+                  <h4>No Gi- Mixed Levels</h4>
+                  <p class="meta">Coach: Hejraat Rashid | Spots: 0/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section class="ns-day">
+              <h3>2026-03-04</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">7:00 AM (60 min)</p>
+                  <h4>No Gi- MIXED LEVELS</h4>
+                  <p class="meta">Coach: Olly Jones | Spots: 1/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">11:00 AM (60 min)</p>
+                  <h4>Gi - Advanced</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 0/1</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">12:00 PM (90 min)</p>
+                  <h4>Wrestling / Coach Junior</h4>
+                  <p class="meta">Coach: Junior | Spots: 0/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Cubs 4+</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 1/20</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Wednesday - Cubs 4-7 Free Trial</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/6</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">5:00 PM (45 min)</p>
+                  <h4>Juniors 8+</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/25</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">5:00 PM (45 min)</p>
+                  <h4>Wednesday - Juniors 8-12 Free Trial</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/6</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">6:00 PM (90 min)</p>
+                  <h4>Gi Class- ADVANCED</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 3/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">7:30 PM (90 min)</p>
+                  <h4>ADVANCED- Sparring</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 0/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section class="ns-day">
+              <h3>2026-03-05</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">7:00 AM (60 min)</p>
+                  <h4>Gi- FUNDAMENTALS</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 4/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">11:00 AM (120 min)</p>
+                  <h4>Gi- ADVANCED</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 0/30</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Cubs 4+</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/20</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:15 PM (30 min)</p>
+                  <h4>Thursday - Cubs 4-7 Free Trial</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/6</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">5:00 PM (45 min)</p>
+                  <h4>Juniors 8+</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/20</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">6:00 PM (60 min)</p>
+                  <h4>Beginners</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 9/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">7:00 PM (60 min)</p>
+                  <h4>Gi - Fundamentals</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 7/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">8:00 PM (75 min)</p>
+                  <h4>Gi Comp Class- Fundamentals</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section class="ns-day">
+              <h3>2026-03-06</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">7:00 AM (60 min)</p>
+                  <h4>No Gi- MIXED LEVELS</h4>
+                  <p class="meta">Coach: Olly Jones | Spots: 2/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">11:00 AM (120 min)</p>
+                  <h4>Gi- FUNDAMENTALS</h4>
+                  <p class="meta">Coach: Leonardo Neves | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">6:00 PM (60 min)</p>
+                  <h4>Beginners</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">7:00 PM (90 min)</p>
+                  <h4>Gi- Fundamentals</h4>
+                  <p class="meta">Coach: Leonardo Neves, Reiss Bailey | Spots: 3/40</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section class="ns-day">
+              <h3>2026-03-07</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">9:30 AM (45 min)</p>
+                  <h4>Kids Cubs and Juniors Mixed</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">9:30 AM (45 min)</p>
+                  <h4>Saturday - Cubs Juniors Mixed</h4>
+                  <p class="meta">Coach: TBA | Spots: 0/6</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">10:15 AM (30 min)</p>
+                  <h4>Kids Advanced</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">11:00 AM (90 min)</p>
+                  <h4>Gi- MIXED LEVELS</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">12:45 PM (90 min)</p>
+                  <h4>No Gi/ Wrestling- MIXED LEVELS</h4>
+                  <p class="meta">Coach: Bernardo Rosalba | Spots: 0/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">4:00 PM (90 min)</p>
+                  <h4>Teens class</h4>
+                  <p class="meta">Coach: Tyler Jackson Dawkins | Spots: 0/15</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section class="ns-day">
+              <h3>2026-03-08</h3>
+              <div class="ns-events">
+                
+                <article class="ns-event">
+                  <p class="time">11:30 AM (60 min)</p>
+                  <h4>Strength and Conditioning For JiuJitsu</h4>
+                  <p class="meta">Coach: TBA | Spots: 1/25</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">1:00 PM (90 min)</p>
+                  <h4>Gi mixed levels BJJ</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 0/1</p>
+                  <span class="ns-tag">Not bookable</span>
+                </article>
+                
+                <article class="ns-event">
+                  <p class="time">1:00 PM (90 min)</p>
+                  <h4>Gi- MIXED LEVELS</h4>
+                  <p class="meta">Coach: Reiss Bailey | Spots: 3/30</p>
+                  <a class="ns-btn secondary" href="https://www.newschoolbjjlondon.co.uk/book" target="_blank" rel="noopener noreferrer">Book</a>
+                </article>
+                
+              </div>
+            </section>
+            
+    </section>
+  </main>
+</body>
+</html>
