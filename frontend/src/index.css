@@ -104,8 +104,16 @@
 /* Responsive text utilities */
 @media (max-width: 480px) {
   .hero-heading {
-    font-size: clamp(2.5rem, 12vw, 4.5rem) !important;
+    font-size: clamp(2.2rem, 11vw, 4rem) !important;
     line-height: 0.9 !important;
+  }
+}
+
+/* Ensure hero content stays within viewport bounds */
+@supports (height: 100svh) {
+  .hero-content {
+    max-height: calc(100svh - 10rem);
+    overflow: visible;
   }
 }
 

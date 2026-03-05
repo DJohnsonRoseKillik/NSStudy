@@ -13,7 +13,10 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost/NSStudy/backend/api.php',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '?path='),
+        rewrite: (path) => {
+          const cleaned = path.replace(/^\/api\/?/, '');
+          return cleaned ? `?path=${cleaned}` : '';
+        },
       },
       '/uploads': {
         target: 'http://localhost/NSStudy/backend/uploads',

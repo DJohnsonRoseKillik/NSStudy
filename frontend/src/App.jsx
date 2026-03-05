@@ -1,17 +1,82 @@
 import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, Link, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Shield, Trophy, Users, Calendar, CheckCircle, ChevronRight,
   Menu, X, Plus, Edit, Trash2, LogOut, Camera, ArrowRight,
-  MapPin, Phone, Mail, Star, Clock, ChevronDown
+  MapPin, Phone, Mail, Star, Clock, ChevronDown, ExternalLink
 } from 'lucide-react';
 import axios from 'axios';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- COMPONENTS ---
+// --- GYMDESK DATA (from gymdesk_components.json) ---
+const GYMDESK_PRICING = [
+  { id: "16611", title: "1 Month Trial", amount: "20.00", currency: "£", frequency: "", details: ["1 month", "Unlimited", "Fundamentals Programme"], signup_url: "https://www.newschoolbjjlondon.co.uk/signup?membership=17224&type=1" },
+  { id: "2275", title: "1 Lesson Drop In", amount: "15.00", currency: "£", frequency: "", details: ["Ongoing", "1 Session"], signup_url: "https://www.newschoolbjjlondon.co.uk/signup?membership=15009&type=2" },
+  { id: "2003", title: "2 Classes Per Week", amount: "70.00", currency: "£", frequency: "/ Month", details: ["Ongoing", "2 Days / week", "Advanced Programme, Fundamentals Programme"], signup_url: "https://www.newschoolbjjlondon.co.uk/signup?membership=13525&type=2", popular: true },
+  { id: "2425", title: "Unlimited Brixton", amount: "95.00", currency: "£", frequency: "/ Month", details: ["Ongoing", "Unlimited"], signup_url: "https://www.newschoolbjjlondon.co.uk/signup?membership=14982&type=2" },
+  { id: "10467", title: "Kids Intro Programme", amount: "300.00", currency: "£", frequency: "", details: ["4 months", "Unlimited", "Fundamentals Programme, Kids Skills Checker"], signup_url: "https://www.newschoolbjjlondon.co.uk/signup?membership=48307&type=1" },
+  { id: "10469", title: "Kids Deposit", amount: "100.00", currency: "£", frequency: "", details: ["1 month", "Unlimited", "Kids Skills Checker"], signup_url: "https://www.newschoolbjjlondon.co.uk/signup?membership=48309&type=1" },
+];
+
+const GYMDESK_SCHEDULE = [
+  { day: "Monday", classes: [
+    { time: "07:00", title: "Gi Fundamentals", duration: 60, instructor: "Leonardo Neves", capacity: 30 },
+    { time: "11:00", title: "Gi Advanced", duration: 120, instructor: "Leonardo Neves", capacity: 25 },
+    { time: "16:15", title: "Cubs 4+", duration: 30, instructor: "", capacity: 20 },
+    { time: "17:00", title: "Juniors 8+", duration: 45, instructor: "Bernardo Rosalba", capacity: 20 },
+    { time: "18:00", title: "Beginners", duration: 60, instructor: "Reiss Bailey", capacity: 30 },
+    { time: "19:00", title: "Gi Fundamentals", duration: 60, instructor: "Leonardo Neves & Reiss Bailey", capacity: 30 },
+    { time: "20:00", title: "Gi Sparring Mixed Levels", duration: 75, instructor: "Leonardo Neves & Reiss Bailey", capacity: 30 },
+  ]},
+  { day: "Tuesday", classes: [
+    { time: "07:00", title: "Gi Fundamentals", duration: 60, instructor: "Leonardo Neves", capacity: 30 },
+    { time: "11:00", title: "Gi Advanced", duration: 120, instructor: "Leonardo Neves", capacity: 30 },
+    { time: "16:15", title: "Cubs Fundamentals 4+", duration: 30, instructor: "", capacity: 20 },
+    { time: "17:00", title: "Juniors Advanced 8+", duration: 45, instructor: "", capacity: 20 },
+    { time: "18:00", title: "No Gi Fundamentals", duration: 90, instructor: "Hejraat Rashid", capacity: 30 },
+    { time: "19:45", title: "No Gi Mixed Levels", duration: 90, instructor: "Hejraat Rashid", capacity: 30 },
+  ]},
+  { day: "Wednesday", classes: [
+    { time: "07:00", title: "No Gi Mixed Levels", duration: 60, instructor: "Olly Jones", capacity: 30 },
+    { time: "11:00", title: "Gi Advanced", duration: 60, instructor: "Leonardo Neves", capacity: 1 },
+    { time: "12:00", title: "Wrestling", duration: 90, instructor: "Junior", capacity: 30 },
+    { time: "16:15", title: "Cubs 4+", duration: 30, instructor: "Bernardo Rosalba", capacity: 20 },
+    { time: "17:00", title: "Juniors 8+", duration: 45, instructor: "Bernardo Rosalba", capacity: 25 },
+    { time: "18:00", title: "Gi Advanced", duration: 90, instructor: "Reiss Bailey", capacity: 30 },
+    { time: "19:30", title: "Advanced Sparring", duration: 90, instructor: "Reiss Bailey", capacity: 30 },
+  ]},
+  { day: "Thursday", classes: [
+    { time: "07:00", title: "Gi Fundamentals", duration: 60, instructor: "Leonardo Neves", capacity: 30 },
+    { time: "11:00", title: "Gi Advanced", duration: 120, instructor: "Leonardo Neves", capacity: 30 },
+    { time: "16:15", title: "Cubs 4+", duration: 30, instructor: "Bernardo Rosalba", capacity: 20 },
+    { time: "17:00", title: "Juniors 8+", duration: 45, instructor: "Bernardo Rosalba", capacity: 20 },
+    { time: "18:00", title: "Beginners", duration: 60, instructor: "Reiss Bailey", capacity: 30 },
+    { time: "19:00", title: "Gi Fundamentals", duration: 60, instructor: "Reiss Bailey", capacity: 30 },
+    { time: "20:00", title: "Gi Comp Class", duration: 75, instructor: "Reiss Bailey", capacity: 30 },
+  ]},
+  { day: "Friday", classes: [
+    { time: "07:00", title: "No Gi Mixed Levels", duration: 60, instructor: "Olly Jones", capacity: 30 },
+    { time: "11:00", title: "Gi Fundamentals", duration: 120, instructor: "Leonardo Neves", capacity: 30 },
+    { time: "18:00", title: "Beginners", duration: 60, instructor: "Reiss Bailey", capacity: 30 },
+    { time: "19:00", title: "Gi Fundamentals", duration: 90, instructor: "Leonardo Neves & Reiss Bailey", capacity: 40 },
+  ]},
+  { day: "Saturday", classes: [
+    { time: "09:30", title: "Kids Cubs & Juniors Mixed", duration: 45, instructor: "Bernardo Rosalba", capacity: 30 },
+    { time: "10:15", title: "Kids Advanced", duration: 30, instructor: "Bernardo Rosalba", capacity: 30 },
+    { time: "11:00", title: "Gi Mixed Levels", duration: 90, instructor: "Bernardo Rosalba", capacity: 30 },
+    { time: "12:45", title: "No Gi / Wrestling Mixed Levels", duration: 90, instructor: "Bernardo Rosalba", capacity: 30 },
+    { time: "16:00", title: "Teens Class", duration: 90, instructor: "Tyler Jackson Dawkins", capacity: 15 },
+  ]},
+  { day: "Sunday", classes: [
+    { time: "11:30", title: "Strength & Conditioning for Jiu-Jitsu", duration: 60, instructor: "", capacity: 25 },
+    { time: "13:00", title: "Gi Mixed Levels", duration: 90, instructor: "Reiss Bailey", capacity: 30 },
+  ]},
+];
+
+// --- SHARED COMPONENTS ---
 
 const MagneticButton = ({ children, className = "", onClick, type = "primary", icon: Icon, href }) => {
   const Tag = href ? 'a' : 'button';
@@ -39,6 +104,28 @@ const SectionLabel = ({ children, className = "" }) => (
   </span>
 );
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
+const GoogleMap = ({ className = "" }) => (
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2485.9!2d-0.1155!3d51.4505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b5a0cebc63%3A0x2b0a0fa29bdd9f8c!2sNew%20School%20BJJ%20Brixton!5e0!3m2!1sen!2sgb!4v1709654321"
+    width="100%"
+    height="100%"
+    style={{ border: 0 }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    title="New School BJJ Brixton location"
+    className={className}
+  />
+);
+
+// --- NAVBAR ---
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -59,10 +146,11 @@ const Navbar = () => {
   }, [mobileMenu]);
 
   const navLinks = [
-    { name: 'About', href: '#features' },
-    { name: 'Instructors', href: '#instructors' },
-    { name: 'Schedule', href: '#book' },
-    { name: 'Pricing', href: '#book' },
+    { name: 'About', href: '/#features' },
+    { name: 'Instructors', href: '/#instructors' },
+    { name: 'Schedule', href: '/schedule' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Contact', href: '/contact' },
     { name: 'Shop', href: 'https://www.newschoolbjjlondon.co.uk/shop' },
   ];
 
@@ -70,29 +158,46 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'py-2' : 'py-4 sm:py-6'}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className={`glass-strong rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between transition-all duration-500 ${scrolled ? 'shadow-2xl shadow-black/20' : ''}`}>
-          <a href="#" className="flex items-center gap-3">
-            <img src="/logo.png" alt="New School BJJ" className="h-8 sm:h-10 w-auto invert" />
+          <Link to="/" className="flex items-center gap-3">
+            <img src="/logo.png" alt="New School BJJ" className="h-8 sm:h-10 w-auto invert" width="40" height="40" />
             <span className="font-black tracking-tight text-sm sm:text-lg hidden sm:block">NEW SCHOOL BJJ</span>
-          </a>
+          </Link>
 
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-            {navLinks.map(link => (
-              <a
-                key={link.name}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="text-[11px] uppercase tracking-widest font-semibold text-white/70 hover:text-white transition-colors duration-300"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map(link => {
+              const isExternal = link.href.startsWith('http');
+              const isHash = link.href.includes('#');
+              if (isExternal) {
+                return (
+                  <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer"
+                    className="text-[11px] uppercase tracking-widest font-semibold text-white/70 hover:text-white transition-colors duration-300">
+                    {link.name}
+                  </a>
+                );
+              }
+              if (isHash) {
+                return (
+                  <a key={link.name} href={link.href}
+                    className="text-[11px] uppercase tracking-widest font-semibold text-white/70 hover:text-white transition-colors duration-300">
+                    {link.name}
+                  </a>
+                );
+              }
+              return (
+                <Link key={link.name} to={link.href}
+                  className="text-[11px] uppercase tracking-widest font-semibold text-white/70 hover:text-white transition-colors duration-300">
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-3">
-            <MagneticButton className="!px-5 !py-2.5 !text-[10px]" onClick={() => { window.location.hash = 'book'; }}>
-              Join Now
-            </MagneticButton>
+            <Link to="/pricing">
+              <MagneticButton className="!px-5 !py-2.5 !text-[10px]">
+                Join Now
+              </MagneticButton>
+            </Link>
             <button
               className="lg:hidden p-2 rounded-xl hover:bg-white/10 transition-colors"
               onClick={() => setMobileMenu(true)}
@@ -104,7 +209,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 bg-primary/98 backdrop-blur-xl z-[200] flex flex-col transition-all duration-500 ${mobileMenu ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         role="dialog"
@@ -122,27 +226,39 @@ const Navbar = () => {
           </button>
         </div>
         <div className="flex-1 flex flex-col justify-center px-10 gap-2">
-          {navLinks.map((link, i) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenu(false)}
-              className="text-4xl sm:text-5xl font-black tracking-tighter py-3 hover:text-gold transition-colors duration-300 border-b border-white/5"
-              style={{ animationDelay: `${i * 0.05}s` }}
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link, i) => {
+            const isExternal = link.href.startsWith('http');
+            const isHash = link.href.includes('#');
+            const Tag = isExternal || isHash ? 'a' : Link;
+            const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+            const tagProps = !isExternal && !isHash ? { to: link.href } : { href: link.href };
+            return (
+              <Tag
+                key={link.name}
+                {...tagProps}
+                {...extraProps}
+                onClick={() => setMobileMenu(false)}
+                className="text-4xl sm:text-5xl font-black tracking-tighter py-3 hover:text-gold transition-colors duration-300 border-b border-white/5"
+                style={{ animationDelay: `${i * 0.05}s` }}
+              >
+                {link.name}
+              </Tag>
+            );
+          })}
         </div>
         <div className="p-10">
-          <MagneticButton className="w-full justify-center !py-5" onClick={() => { setMobileMenu(false); window.location.hash = 'book'; }}>
-            Book Your First Class
-          </MagneticButton>
+          <Link to="/pricing" onClick={() => setMobileMenu(false)}>
+            <MagneticButton className="w-full justify-center !py-5">
+              Book Your First Class
+            </MagneticButton>
+          </Link>
         </div>
       </div>
     </nav>
   );
 };
+
+// --- HERO ---
 
 const Hero = () => {
   const containerRef = useRef();
@@ -150,12 +266,7 @@ const Hero = () => {
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from(".hero-content > *", {
-        y: 50,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 1,
-        ease: "power3.out",
-        delay: 0.3
+        y: 50, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", delay: 0.3
       });
     }, containerRef);
     return () => ctx.revert();
@@ -164,13 +275,18 @@ const Hero = () => {
   return (
     <section ref={containerRef} className="relative min-h-[100svh] w-full flex items-end pb-16 sm:pb-24 md:pb-32 px-5 sm:px-8 md:px-10 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
-          src="/hero.png"
-          className="w-full h-full object-cover grayscale opacity-50"
-          alt=""
-          loading="eager"
-          fetchPriority="high"
-        />
+        <picture>
+          <source srcSet="/hero.webp" type="image/webp" />
+          <img
+            src="/hero.png"
+            className="w-full h-full object-cover grayscale opacity-50"
+            alt="Brazilian Jiu-Jitsu training at New School BJJ Brixton"
+            loading="eager"
+            fetchPriority="high"
+            width="1920"
+            height="1080"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/60 to-bg-dark/20"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-bg-dark/40 to-transparent"></div>
       </div>
@@ -184,12 +300,16 @@ const Hero = () => {
           A transformative journey teaching discipline, resilience, and world-class technique under championship-level coaching.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <MagneticButton icon={ChevronRight} onClick={() => { window.location.hash = 'book'; }}>
-            Book your first class
-          </MagneticButton>
-          <MagneticButton type="secondary" onClick={() => { window.location.hash = 'book'; }}>
-            View Memberships
-          </MagneticButton>
+          <Link to="/pricing">
+            <MagneticButton icon={ChevronRight}>
+              Book your first class
+            </MagneticButton>
+          </Link>
+          <Link to="/pricing">
+            <MagneticButton type="secondary">
+              View Memberships
+            </MagneticButton>
+          </Link>
         </div>
       </div>
 
@@ -199,6 +319,8 @@ const Hero = () => {
     </section>
   );
 };
+
+// --- FEATURES ---
 
 const Features = () => {
   const containerRef = useRef();
@@ -221,11 +343,7 @@ const Features = () => {
     let ctx = gsap.context(() => {
       gsap.from(".feature-card", {
         scrollTrigger: { trigger: containerRef.current, start: "top 80%" },
-        y: 40,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: "power3.out"
+        y: 40, opacity: 0, stagger: 0.15, duration: 0.8, ease: "power3.out"
       });
     }, containerRef);
     return () => ctx.revert();
@@ -241,7 +359,6 @@ const Features = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
-        {/* Card 1: Shuffler */}
         <div className="feature-card card-glow glass rounded-2xl sm:rounded-3xl p-7 sm:p-9 md:p-10 flex flex-col min-h-[380px] sm:min-h-[420px] md:h-[500px] relative overflow-hidden group">
           <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest mb-8 sm:mb-10 flex items-center gap-2">
             <Shield size={16} className="text-gold" /> Structured Curriculum
@@ -268,7 +385,6 @@ const Features = () => {
           <p className="mt-8 sm:mt-10 text-silver text-xs sm:text-sm">Designed for all levels, from beginners to advanced athletes.</p>
         </div>
 
-        {/* Card 2: Community */}
         <div className="feature-card card-glow glass rounded-2xl sm:rounded-3xl p-7 sm:p-9 md:p-10 flex flex-col min-h-[380px] sm:min-h-[420px] md:h-[500px]">
           <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest mb-8 sm:mb-10 flex items-center gap-2">
             <Users size={16} className="text-gold" /> Strong Community
@@ -289,7 +405,6 @@ const Features = () => {
           <p className="mt-8 sm:mt-10 text-silver text-xs sm:text-sm">Members support each other both on and off the mats.</p>
         </div>
 
-        {/* Card 3: Schedule */}
         <div className="feature-card card-glow glass rounded-2xl sm:rounded-3xl p-7 sm:p-9 md:p-10 flex flex-col min-h-[380px] sm:min-h-[420px] md:h-[500px]">
           <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest mb-8 sm:mb-10 flex items-center gap-2">
             <Calendar size={16} className="text-gold" /> Expert Instruction
@@ -318,12 +433,14 @@ const Features = () => {
               ))}
             </div>
           </div>
-          <p className="mt-8 sm:mt-10 text-silver text-xs sm:text-sm">Focused on technical development, fitness, and self-defense.</p>
+          <p className="mt-8 sm:mt-10 text-silver text-xs sm:text-sm">Focused on technical development, fitness, and self-defence.</p>
         </div>
       </div>
     </section>
   );
 };
+
+// --- PHILOSOPHY ---
 
 const Philosophy = () => {
   const sectionRef = useRef();
@@ -332,11 +449,7 @@ const Philosophy = () => {
     let ctx = gsap.context(() => {
       gsap.from(".reveal-item", {
         scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
-        y: 40,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1,
-        ease: "power3.out"
+        y: 40, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out"
       });
     });
     return () => ctx.revert();
@@ -345,7 +458,10 @@ const Philosophy = () => {
   return (
     <section ref={sectionRef} className="bg-black py-24 sm:py-32 md:py-40 px-5 sm:px-8 md:px-10 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
-        <img src="/hero.png" className="w-full h-full object-cover scale-150 blur-2xl" alt="" loading="lazy" />
+        <picture>
+          <source srcSet="/hero.webp" type="image/webp" />
+          <img src="/hero.png" className="w-full h-full object-cover scale-150 blur-2xl" alt="" loading="lazy" />
+        </picture>
       </div>
       <div className="max-w-5xl mx-auto relative z-10">
         <SectionLabel className="reveal-item">The Manifesto</SectionLabel>
@@ -362,6 +478,8 @@ const Philosophy = () => {
   );
 };
 
+// --- PROTOCOL ---
+
 const Protocol = () => {
   const containerRef = useRef();
 
@@ -371,11 +489,7 @@ const Protocol = () => {
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return;
         ScrollTrigger.create({
-          trigger: card,
-          start: "top top",
-          pin: true,
-          pinSpacing: false,
-          scrub: true,
+          trigger: card, start: "top top", pin: true, pinSpacing: false, scrub: true,
           onUpdate: (self) => {
             const scale = 1 - (self.progress * 0.08);
             const opacity = 1 - (self.progress * 0.5);
@@ -389,21 +503,9 @@ const Protocol = () => {
   }, []);
 
   const steps = [
-    {
-      step: "01",
-      title: "Learn the Foundations",
-      desc: "Master the fundamental movements and entries that define elite Brazilian Jiu-Jitsu.",
-    },
-    {
-      step: "02",
-      title: "Build Your Resilience",
-      desc: "Develop the mental fortitude and physical stamina to thrive in high-pressure scenarios.",
-    },
-    {
-      step: "03",
-      title: "Master the Application",
-      desc: "Apply your skills in real-time sparring and competition scenarios with technical precision.",
-    }
+    { step: "01", title: "Learn the Foundations", desc: "Master the fundamental movements and entries that define elite Brazilian Jiu-Jitsu." },
+    { step: "02", title: "Build Your Resilience", desc: "Develop the mental fortitude and physical stamina to thrive in high-pressure scenarios." },
+    { step: "03", title: "Master the Application", desc: "Apply your skills in real-time sparring and competition scenarios with technical precision." }
   ];
 
   return (
@@ -428,6 +530,8 @@ const Protocol = () => {
   );
 };
 
+// --- INSTRUCTORS ---
+
 const Instructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -439,7 +543,6 @@ const Instructors = () => {
         if (Array.isArray(res.data)) {
           setInstructors(res.data);
         } else {
-          console.error('API did not return an array:', res.data);
           setInstructors([]);
         }
       })
@@ -448,19 +551,15 @@ const Instructors = () => {
   }, []);
 
   useLayoutEffect(() => {
-    if (loading) return;
+    if (loading || instructors.length === 0) return;
     let ctx = gsap.context(() => {
       gsap.from(".instructor-card", {
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-        y: 30,
-        opacity: 0,
-        stagger: 0.08,
-        duration: 0.6,
-        ease: "power3.out"
+        y: 30, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power3.out"
       });
     }, sectionRef);
     return () => ctx.revert();
-  }, [loading]);
+  }, [loading, instructors]);
 
   return (
     <section id="instructors" ref={sectionRef} className="py-20 sm:py-28 md:py-32 px-5 sm:px-8 md:px-10 max-w-7xl mx-auto">
@@ -499,6 +598,8 @@ const Instructors = () => {
                   alt={inst.name}
                   className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
                   loading="lazy"
+                  width="400"
+                  height="500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                 {inst.instagram_handle && (
@@ -536,134 +637,91 @@ const Instructors = () => {
   );
 };
 
-const GymdeskWidgetSection = () => (
-  <section id="book" className="mx-3 sm:mx-5 md:mx-8 lg:mx-10 my-8">
-    <div className="bg-white text-primary rounded-2xl sm:rounded-3xl md:rounded-[3rem] py-16 sm:py-24 md:py-32 px-5 sm:px-8 md:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <span className="inline-block font-mono text-primary/40 text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4">
-            Memberships & Booking
-          </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-4 sm:mb-6">
-            Start Your<br />Journey
-          </h2>
-          <p className="max-w-xl mx-auto text-primary/50 text-sm sm:text-base">
-            Join our community in Brixton. Select a plan and begin training today.
-          </p>
-        </div>
+// --- GYMDESK WIDGET (PRICING PREVIEW FOR HOMEPAGE) ---
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-16 sm:mb-20">
-          {[
-            { name: "1 Month Trial", price: "£20", desc: "1 month unlimited fundamentals program. Perfect for trying us out.", popular: false },
-            { name: "2 Classes / Week", price: "£70", desc: "Ongoing access to advanced and fundamentals classes.", popular: true },
-            { name: "Unlimited", price: "£95", desc: "Full ongoing access to all sessions at Brixton.", popular: false }
-          ].map(plan => (
-            <div
-              key={plan.name}
-              className={`relative p-7 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${plan.popular
-                ? 'bg-primary text-white border-primary shadow-2xl shadow-primary/20'
-                : 'bg-transparent border-primary/10 hover:border-primary/20'
-                }`}
-            >
-              {plan.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-primary text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full">
-                  Most Popular
-                </span>
-              )}
-              <h3 className="text-sm sm:text-base font-black uppercase mb-3 sm:mb-4">{plan.name}</h3>
-              <p className="text-3xl sm:text-4xl font-serif italic mb-4 sm:mb-6">
-                {plan.price}
-                <span className="text-[10px] sm:text-xs uppercase font-sans font-black opacity-40 ml-2">/ month</span>
-              </p>
-              <p className={`text-xs sm:text-sm mb-8 sm:mb-10 leading-relaxed ${plan.popular ? 'text-white/50' : 'text-primary/50'}`}>
-                {plan.desc}
-              </p>
-              <a
-                href="https://www.newschoolbjjlondon.co.uk/pricing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block w-full py-3.5 sm:py-4 rounded-full font-black uppercase tracking-widest text-[10px] sm:text-xs text-center transition-all duration-300 ${plan.popular
-                  ? 'bg-white text-primary hover:bg-gold'
-                  : 'bg-primary text-white hover:bg-primary/80'
-                  }`}
-              >
-                Select Plan
-              </a>
-            </div>
-          ))}
-        </div>
+const GymdeskWidgetSection = () => {
+  const adultPlans = GYMDESK_PRICING.filter(p => !p.title.toLowerCase().includes('kids') && !p.title.toLowerCase().includes('deposit'));
 
-        <div className="bg-primary/[0.03] rounded-2xl sm:rounded-3xl md:rounded-[3rem] p-6 sm:p-10 md:p-16 lg:p-20">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-10 gap-4">
-            <div>
-              <span className="font-mono text-primary/30 text-[10px] tracking-widest uppercase block mb-2">This Week</span>
-              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight">
-                Weekly Schedule
-              </h3>
-            </div>
-            <a
-              href="https://www.newschoolbjjlondon.co.uk/schedule"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-black uppercase flex items-center gap-2 text-primary/60 hover:text-primary transition-colors"
-            >
-              Full Schedule <ArrowRight size={14} />
-            </a>
+  return (
+    <section id="book" className="mx-3 sm:mx-5 md:mx-8 lg:mx-10 my-8">
+      <div className="bg-white text-primary rounded-2xl sm:rounded-3xl md:rounded-[3rem] py-16 sm:py-24 md:py-32 px-5 sm:px-8 md:px-10 lg:px-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <span className="inline-block font-mono text-primary/40 text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4">
+              Memberships & Booking
+            </span>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-4 sm:mb-6">
+              Start Your<br />Journey
+            </h2>
+            <p className="max-w-xl mx-auto text-primary/50 text-sm sm:text-base">
+              Join our community in Brixton. Select a plan and begin training today.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
-            {[
-              { time: "07:00 AM", title: "Gi Fundamentals", coach: "Leonardo Neves", spots: 12 },
-              { time: "11:00 AM", title: "Gi Advanced", coach: "Leonardo Neves", spots: 8 },
-              { time: "06:00 PM", title: "Beginners", coach: "Reiss Bailey", spots: 15 },
-              { time: "07:00 PM", title: "Gi Fundamentals", coach: "Reiss Bailey", spots: 10 },
-              { time: "08:00 PM", title: "No-Gi Advanced", coach: "Reiss Bailey", spots: 6 },
-              { time: "12:00 PM", title: "Open Mat", coach: "All Instructors", spots: 20 }
-            ].map(item => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-12 sm:mb-16">
+            {adultPlans.map(plan => (
               <div
-                key={item.time + item.title}
-                className="bg-white border border-primary/5 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl flex justify-between items-center transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 group"
+                key={plan.id}
+                className={`relative p-7 sm:p-8 rounded-2xl sm:rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${plan.popular
+                  ? 'bg-primary text-white border-primary shadow-2xl shadow-primary/20 md:scale-105'
+                  : 'bg-transparent border-primary/10 hover:border-primary/20'
+                  }`}
               >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Clock size={12} className="text-primary/30 flex-shrink-0" />
-                    <span className="font-mono text-[10px] sm:text-[11px] text-primary/40">{item.time}</span>
-                    <span className="text-[10px] text-primary/20">|</span>
-                    <span className="text-[10px] text-primary/30">{item.spots} spots</span>
-                  </div>
-                  <h4 className="text-sm sm:text-base md:text-lg font-black uppercase truncate">{item.title}</h4>
-                  <p className="text-[10px] sm:text-xs text-primary/50 mt-0.5">{item.coach}</p>
-                </div>
+                {plan.popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-primary text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full">
+                    Most Popular
+                  </span>
+                )}
+                <h3 className="text-sm sm:text-base font-black uppercase mb-3">{plan.title}</h3>
+                <p className="text-3xl sm:text-4xl font-serif italic mb-2">
+                  {plan.currency}{parseFloat(plan.amount).toFixed(0)}
+                  {plan.frequency && <span className="text-[10px] sm:text-xs uppercase font-sans font-black opacity-40 ml-2">{plan.frequency}</span>}
+                </p>
+                <ul className={`text-xs mb-8 space-y-1 ${plan.popular ? 'text-white/50' : 'text-primary/50'}`}>
+                  {plan.details.map((d, i) => <li key={i}>{d}</li>)}
+                </ul>
                 <a
-                  href="https://www.newschoolbjjlondon.co.uk/schedule"
+                  href={plan.signup_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 ml-3 px-4 sm:px-6 py-2 border border-primary/10 rounded-full text-[10px] font-black uppercase hover:bg-primary hover:text-white transition-all duration-300 group-hover:border-primary/20"
+                  className={`block w-full py-3.5 rounded-full font-black uppercase tracking-widest text-[10px] sm:text-xs text-center transition-all duration-300 ${plan.popular
+                    ? 'bg-white text-primary hover:bg-gold'
+                    : 'bg-primary text-white hover:bg-primary/80'
+                    }`}
                 >
-                  Book
+                  Select Plan
                 </a>
               </div>
             ))}
           </div>
+
+          <div className="text-center">
+            <Link to="/pricing" className="inline-flex items-center gap-2 text-xs font-black uppercase text-primary/60 hover:text-primary transition-colors border border-primary/10 px-6 py-3 rounded-full hover:border-primary/20">
+              View All Plans Including Kids <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
+
+// --- FOOTER (2-column layout, no "Powered by Gymdesk") ---
 
 const Footer = () => (
   <footer className="pt-20 sm:pt-28 md:pt-32 pb-8 sm:pb-10 px-5 sm:px-8 md:px-10">
     <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 lg:gap-16 mb-16 sm:mb-24 md:mb-32">
-        <div className="sm:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-16 sm:mb-24 md:mb-32">
+        {/* Column 1: Brand + Social + Quick Links */}
+        <div>
           <div className="flex items-center gap-3 mb-6 sm:mb-8">
-            <img src="/logo.png" className="h-10 sm:h-12 w-auto invert" alt="New School BJJ" />
+            <img src="/logo.png" className="h-10 sm:h-12 w-auto invert" alt="New School BJJ" width="48" height="48" />
             <span className="text-xl sm:text-2xl font-black tracking-tighter">NEW SCHOOL BJJ</span>
           </div>
           <p className="text-silver text-sm max-w-sm mb-8 sm:mb-10 leading-relaxed">
             A transformative journey through Brazilian Jiu-Jitsu in the heart of Brixton. Expert instruction, elite discipline.
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-3 mb-10">
             {[
               { icon: 'fa-instagram', href: 'https://www.instagram.com/newschoolbjj/', label: 'Instagram' },
               { icon: 'fa-x-twitter', href: 'https://twitter.com/_nsbjj', label: 'Twitter/X' },
@@ -681,14 +739,28 @@ const Footer = () => (
               </a>
             ))}
           </div>
+
+          <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+            <h4 className="col-span-2 text-xs font-black uppercase tracking-widest mb-2 text-gold/70">Quick Links</h4>
+            <Link to="/schedule" className="text-xs text-silver hover:text-white transition-colors">Schedule</Link>
+            <Link to="/pricing" className="text-xs text-silver hover:text-white transition-colors">Pricing</Link>
+            <Link to="/contact" className="text-xs text-silver hover:text-white transition-colors">Contact</Link>
+            <a href="https://www.newschoolbjjlondon.co.uk/shop" target="_blank" rel="noopener noreferrer" className="text-xs text-silver hover:text-white transition-colors">Shop</a>
+            <a href="https://www.newschoolbjjlondon.co.uk/blogs" target="_blank" rel="noopener noreferrer" className="text-xs text-silver hover:text-white transition-colors">Blog</a>
+            <a href="https://www.newschoolbjjlondon.co.uk/signup" target="_blank" rel="noopener noreferrer" className="text-xs text-silver hover:text-white transition-colors">Sign Up</a>
+          </div>
         </div>
 
+        {/* Column 2: Contact + Map */}
         <div>
-          <h4 className="text-xs font-black uppercase tracking-widest mb-6 sm:mb-8 text-gold/70">Contact</h4>
+          <h4 className="text-xs font-black uppercase tracking-widest mb-6 sm:mb-8 text-gold/70">Find Us</h4>
+          <div className="rounded-2xl overflow-hidden mb-8 h-[200px] sm:h-[250px]">
+            <GoogleMap />
+          </div>
           <ul className="space-y-4 text-silver text-sm">
             <li className="flex items-start gap-3">
               <MapPin size={14} className="text-white/20 mt-0.5 flex-shrink-0" />
-              <span>130 Brixton Hill,<br />London SW2 1RS</span>
+              <span>130 Brixton Hill, London SW2 1RS</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone size={14} className="text-white/20 flex-shrink-0" />
@@ -700,40 +772,317 @@ const Footer = () => (
             </li>
           </ul>
         </div>
-
-        <div>
-          <h4 className="text-xs font-black uppercase tracking-widest mb-6 sm:mb-8 text-gold/70">Status</h4>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-2 h-2 bg-green-500 rounded-full pulse-ring"></div>
-            <span className="font-mono text-[10px] uppercase text-green-500/80">Operational</span>
-          </div>
-          <div className="space-y-3">
-            <a
-              href="https://www.newschoolbjjlondon.co.uk/blogs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-xs text-silver hover:text-white transition-colors"
-            >
-              Blog
-            </a>
-            <a
-              href="https://www.newschoolbjjlondon.co.uk/shop"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-xs text-silver hover:text-white transition-colors"
-            >
-              Shop
-            </a>
-          </div>
-        </div>
       </div>
 
       <div className="border-t border-white/5 pt-8 sm:pt-10 flex flex-col sm:flex-row justify-between gap-4 text-[10px] text-silver/60 font-mono uppercase tracking-widest">
-        <span>&copy; {new Date().getFullYear()} New School BJJ Brixton</span>
-        <span>Powered by Gymdesk</span>
+        <span>&copy; {new Date().getFullYear()} New School BJJ Brixton. All rights reserved.</span>
+        <div className="flex gap-6">
+          <Link to="/schedule" className="hover:text-white/80 transition-colors">Schedule</Link>
+          <Link to="/pricing" className="hover:text-white/80 transition-colors">Pricing</Link>
+          <Link to="/contact" className="hover:text-white/80 transition-colors">Contact</Link>
+        </div>
       </div>
     </div>
   </footer>
+);
+
+// --- DEDICATED PAGES ---
+
+const SchedulePage = () => {
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  useEffect(() => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    setSelectedDay(days[new Date().getDay()]);
+  }, []);
+
+  return (
+    <>
+      <Navbar />
+      <main className="pt-28 sm:pt-36 pb-20 px-5 sm:px-8 md:px-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-12 sm:mb-16">
+            <SectionLabel>Weekly Timetable</SectionLabel>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-4">
+              Class Schedule
+            </h1>
+            <p className="text-silver text-sm sm:text-base max-w-xl">
+              View our full weekly schedule. All classes held at 130 Brixton Hill, London SW2 1RS.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-8 sm:mb-12">
+            {GYMDESK_SCHEDULE.map(dayData => (
+              <button
+                key={dayData.day}
+                onClick={() => setSelectedDay(dayData.day)}
+                className={`px-4 sm:px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 ${selectedDay === dayData.day
+                  ? 'bg-white text-primary'
+                  : 'glass hover:bg-white/10'
+                  }`}
+              >
+                {dayData.day}
+              </button>
+            ))}
+          </div>
+
+          {GYMDESK_SCHEDULE.filter(d => !selectedDay || d.day === selectedDay).map(dayData => (
+            <div key={dayData.day} className="mb-10">
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tighter mb-4 sm:mb-6">{dayData.day}</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+                {dayData.classes.map((cls, i) => (
+                  <div key={i} className="glass rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 flex justify-between items-center transition-all duration-300 hover:border-white/15 group">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <Clock size={12} className="text-gold/60 flex-shrink-0" />
+                        <span className="font-mono text-[10px] sm:text-[11px] text-silver">{cls.time}</span>
+                        <span className="text-[10px] text-white/20">|</span>
+                        <span className="text-[10px] text-silver">{cls.duration} min</span>
+                      </div>
+                      <h3 className="text-sm sm:text-base md:text-lg font-black uppercase truncate">{cls.title}</h3>
+                      {cls.instructor && <p className="text-[10px] sm:text-xs text-silver mt-0.5">{cls.instructor}</p>}
+                    </div>
+                    <a
+                      href="https://www.newschoolbjjlondon.co.uk/book"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 ml-3 px-4 sm:px-6 py-2 border border-white/10 rounded-full text-[10px] font-black uppercase hover:bg-white hover:text-primary transition-all duration-300 group-hover:border-white/20"
+                    >
+                      Book
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="mt-12 text-center">
+            <a
+              href="https://www.newschoolbjjlondon.co.uk/schedule"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-black uppercase text-gold hover:text-white transition-colors"
+            >
+              View Live Schedule on Gymdesk <ExternalLink size={14} />
+            </a>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+};
+
+const PricingPage = () => {
+  const adultPlans = GYMDESK_PRICING.filter(p => !p.title.toLowerCase().includes('kids') && !p.title.toLowerCase().includes('deposit'));
+  const kidsPlans = GYMDESK_PRICING.filter(p => p.title.toLowerCase().includes('kids') || p.title.toLowerCase().includes('deposit'));
+
+  return (
+    <>
+      <Navbar />
+      <main className="pt-28 sm:pt-36 pb-20 px-5 sm:px-8 md:px-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <SectionLabel>Memberships</SectionLabel>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-4 sm:mb-6">
+              Pricing
+            </h1>
+            <p className="max-w-xl mx-auto text-silver text-sm sm:text-base">
+              Transparent pricing with no hidden fees. All plans include access to our world-class facility in Brixton.
+            </p>
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter mb-6 sm:mb-8">Adult Programmes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-16 sm:mb-20">
+            {adultPlans.map(plan => (
+              <div
+                key={plan.id}
+                className={`relative glass card-glow rounded-2xl sm:rounded-3xl p-7 sm:p-8 transition-all duration-300 hover:scale-[1.02] ${plan.popular ? 'border-gold/30 sm:scale-105' : ''}`}
+              >
+                {plan.popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-primary text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full">
+                    Most Popular
+                  </span>
+                )}
+                <h3 className="text-sm sm:text-base font-black uppercase mb-3">{plan.title}</h3>
+                <p className="text-3xl sm:text-4xl font-serif italic mb-2">
+                  {plan.currency}{parseFloat(plan.amount).toFixed(0)}
+                  {plan.frequency && <span className="text-[10px] sm:text-xs uppercase font-sans font-black text-silver ml-2">{plan.frequency}</span>}
+                </p>
+                <ul className="text-xs text-silver mb-8 space-y-1.5">
+                  {plan.details.map((d, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <CheckCircle size={12} className="text-gold/60 flex-shrink-0" />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={plan.signup_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-3.5 rounded-full bg-white text-primary font-black uppercase tracking-widest text-[10px] sm:text-xs text-center hover:bg-gold transition-all duration-300"
+                >
+                  Select Plan
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {kidsPlans.length > 0 && (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter mb-6 sm:mb-8">Kids Programmes</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 mb-12">
+                {kidsPlans.map(plan => (
+                  <div key={plan.id} className="glass card-glow rounded-2xl sm:rounded-3xl p-7 sm:p-8 transition-all duration-300 hover:scale-[1.02]">
+                    <h3 className="text-sm sm:text-base font-black uppercase mb-3">{plan.title}</h3>
+                    <p className="text-3xl sm:text-4xl font-serif italic mb-2">
+                      {plan.currency}{parseFloat(plan.amount).toFixed(0)}
+                      {plan.frequency && <span className="text-[10px] sm:text-xs uppercase font-sans font-black text-silver ml-2">{plan.frequency}</span>}
+                    </p>
+                    <ul className="text-xs text-silver mb-8 space-y-1.5">
+                      {plan.details.map((d, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <CheckCircle size={12} className="text-gold/60 flex-shrink-0" />
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={plan.signup_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full py-3.5 rounded-full bg-white text-primary font-black uppercase tracking-widest text-[10px] sm:text-xs text-center hover:bg-gold transition-all duration-300"
+                    >
+                      Select Plan
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              <div className="glass rounded-2xl sm:rounded-3xl p-8 sm:p-10 md:p-12 mb-12">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tighter mb-4">Kids Jiu-Jitsu — Pricing & Enrolment</h3>
+                <div className="space-y-4 text-silver text-sm leading-relaxed">
+                  <p>We invite you to bring your child to New School BJJ for a <strong className="text-white">free trial class</strong>. This allows them to experience our training environment, meet our instructors, and see if they enjoy the classes before committing.</p>
+                  <p><strong className="text-white">Kids Intro Programme:</strong> Total cost £415 — includes first month of training + official gi. Monthly instalments available.</p>
+                  <p>Once your child completes the Kids Intro Programme, they will be promoted to the Advanced Kids Programme, where the same monthly pricing structure continues.</p>
+                  <p className="text-xs text-silver/60"><strong>Commitment Policy:</strong> By enrolling in the programme, you commit to the full syllabus. If you choose to leave before completing the first four months, the remaining balance must be paid in full.</p>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div className="text-center">
+            <a
+              href="https://www.newschoolbjjlondon.co.uk/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-black uppercase text-gold hover:text-white transition-colors"
+            >
+              View on Gymdesk <ExternalLink size={14} />
+            </a>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+};
+
+const ContactPage = () => (
+  <>
+    <Navbar />
+    <main className="pt-28 sm:pt-36 pb-20 px-5 sm:px-8 md:px-10">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12 sm:mb-16">
+          <SectionLabel>Get in Touch</SectionLabel>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-4">
+            Contact Us
+          </h1>
+          <p className="text-silver text-sm sm:text-base max-w-xl">
+            Visit us, call, or email. We're always happy to hear from new and existing members.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
+          <div className="rounded-2xl sm:rounded-3xl overflow-hidden h-[300px] sm:h-[400px] lg:h-full min-h-[300px]">
+            <GoogleMap />
+          </div>
+
+          <div className="space-y-8">
+            <div className="glass rounded-2xl sm:rounded-3xl p-8 sm:p-10">
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tighter mb-6">Visit Our Academy</h2>
+              <ul className="space-y-5 text-silver">
+                <li className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin size={18} className="text-gold" />
+                  </div>
+                  <div>
+                    <span className="text-white text-sm font-semibold block mb-1">Address</span>
+                    <span className="text-sm">New School BJJ Brixton<br />130 Brixton Hill, London SW2 1RS, GB</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                    <Phone size={18} className="text-gold" />
+                  </div>
+                  <div>
+                    <span className="text-white text-sm font-semibold block mb-1">Phone</span>
+                    <a href="tel:07460351906" className="text-sm hover:text-white transition-colors">07460 351 906</a>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                    <Mail size={18} className="text-gold" />
+                  </div>
+                  <div>
+                    <span className="text-white text-sm font-semibold block mb-1">Email</span>
+                    <a href="mailto:Reiss@newschoolbjj.com" className="text-sm hover:text-white transition-colors">Reiss@newschoolbjj.com</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div className="glass rounded-2xl sm:rounded-3xl p-8 sm:p-10">
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tighter mb-6">Opening Hours</h2>
+              <div className="space-y-3">
+                {[
+                  { day: 'Monday–Friday', hours: '07:00 – 21:30' },
+                  { day: 'Saturday', hours: '09:30 – 17:30' },
+                  { day: 'Sunday', hours: '11:30 – 14:30' },
+                ].map(item => (
+                  <div key={item.day} className="flex justify-between items-center py-2 border-b border-white/5">
+                    <span className="text-sm font-semibold">{item.day}</span>
+                    <span className="text-sm text-silver">{item.hours}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              {[
+                { icon: 'fa-instagram', href: 'https://www.instagram.com/newschoolbjj/', label: 'Instagram' },
+                { icon: 'fa-x-twitter', href: 'https://twitter.com/_nsbjj', label: 'Twitter/X' },
+                { icon: 'fa-facebook', href: 'https://www.facebook.com/NewSchoolBJJ/', label: 'Facebook' },
+              ].map(social => (
+                <a
+                  key={social.icon}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-white hover:text-primary hover:border-transparent transition-all duration-300"
+                  aria-label={social.label}
+                >
+                  <i className={`fa-brands ${social.icon}`}></i>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </>
 );
 
 // --- ADMIN PAGES ---
@@ -765,19 +1114,17 @@ const AdminLogin = ({ onLogin }) => {
   return (
     <div className="min-h-[100svh] flex items-center justify-center p-5 sm:p-10">
       <div className="glass-strong p-8 sm:p-10 rounded-2xl sm:rounded-3xl w-full max-w-md">
-        <a href="/" className="flex items-center gap-3 mb-8">
-          <img src="/logo.png" alt="NSBJJ" className="h-8 w-auto invert" />
+        <Link to="/" className="flex items-center gap-3 mb-8">
+          <img src="/logo.png" alt="NSBJJ" className="h-8 w-auto invert" width="32" height="32" />
           <span className="font-black tracking-tight text-sm">NEW SCHOOL BJJ</span>
-        </a>
+        </Link>
         <h2 className="text-2xl sm:text-3xl font-black uppercase mb-2">Admin Access</h2>
         <p className="text-silver text-xs mb-8">Enter your credentials to access the dashboard.</p>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label htmlFor="username" className="text-[10px] font-black uppercase text-silver block mb-2">Username</label>
             <input
-              id="username"
-              type="text"
-              autoComplete="username"
+              id="username" type="text" autoComplete="username"
               className="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 sm:p-4 focus:border-gold/50 outline-none transition-all text-sm"
               value={credentials.username}
               onChange={e => setCredentials({ ...credentials, username: e.target.value })}
@@ -787,9 +1134,7 @@ const AdminLogin = ({ onLogin }) => {
           <div>
             <label htmlFor="password" className="text-[10px] font-black uppercase text-silver block mb-2">Password</label>
             <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
+              id="password" type="password" autoComplete="current-password"
               className="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 sm:p-4 focus:border-gold/50 outline-none transition-all text-sm"
               value={credentials.password}
               onChange={e => setCredentials({ ...credentials, password: e.target.value })}
@@ -802,8 +1147,7 @@ const AdminLogin = ({ onLogin }) => {
             </div>
           )}
           <button
-            type="submit"
-            disabled={loading}
+            type="submit" disabled={loading}
             className="w-full py-4 rounded-full bg-white text-primary font-black uppercase tracking-widest text-xs hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Authenticating...' : 'Enter Dashboard'}
@@ -888,8 +1232,8 @@ const AdminDashboard = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12 gap-4">
           <div>
-            <a href="/" className="text-xs text-silver hover:text-white transition-colors font-mono uppercase mb-2 inline-block">&larr; Back to site</a>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase">Command Center</h1>
+            <Link to="/" className="text-xs text-silver hover:text-white transition-colors font-mono uppercase mb-2 inline-block">&larr; Back to site</Link>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase">Command Centre</h1>
           </div>
           <button
             onClick={handleLogout}
@@ -916,8 +1260,7 @@ const AdminDashboard = () => {
                     </div>
                   )}
                   <input
-                    type="file"
-                    accept="image/*"
+                    type="file" accept="image/*"
                     className="absolute inset-0 opacity-0 cursor-pointer"
                     onChange={handleImageChange}
                     aria-label="Upload instructor photo"
@@ -941,16 +1284,14 @@ const AdminDashboard = () => {
                 ))}
                 <div className="flex gap-2 pt-3 sm:pt-4">
                   <button
-                    type="submit"
-                    disabled={saving}
+                    type="submit" disabled={saving}
                     className="flex-1 py-3.5 rounded-full bg-white text-primary font-black uppercase tracking-widest text-[10px] sm:text-xs hover:bg-gold transition-all disabled:opacity-50"
                   >
                     {saving ? 'Saving...' : editing ? 'Update' : 'Add Instructor'}
                   </button>
                   {editing && (
                     <button
-                      type="button"
-                      onClick={resetForm}
+                      type="button" onClick={resetForm}
                       className="px-5 rounded-full border border-white/10 text-[10px] font-black uppercase hover:bg-white/5 transition-all"
                     >
                       Cancel
@@ -977,6 +1318,8 @@ const AdminDashboard = () => {
                         className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl object-cover grayscale flex-shrink-0"
                         alt={inst.name}
                         loading="lazy"
+                        width="64"
+                        height="64"
                       />
                       <div className="min-w-0">
                         <h3 className="text-sm sm:text-lg font-black uppercase truncate">{inst.name}</h3>
@@ -1032,8 +1375,12 @@ const App = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLanding />} />
+        <Route path="/schedule" element={<SchedulePage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin" element={<AdminLogin onLogin={() => setIsAdmin(true)} />} />
         <Route path="/admin/dashboard" element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin" />} />
       </Routes>
