@@ -355,7 +355,14 @@ const Instructors = () => {
   const [instructors, setInstructors] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/instructors').then(res => setInstructors(res.data));
+    axios.get('/api/instructors').then(res => {
+      if (Array.isArray(res.data)) {
+        setInstructors(res.data);
+      } else {
+        console.error('API did not return an array:', res.data);
+        setInstructors([]);
+      }
+    });
   }, []);
 
   return (

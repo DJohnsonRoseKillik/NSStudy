@@ -20,7 +20,7 @@ try {
          try {
              $pdo = new PDO("mysql:host=$host;charset=$charset", $user, $pass, $options);
              $pdo->exec("CREATE DATABASE `$db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-             $pdo->exec("USE `$db` text");
+             $pdo->exec("USE `$db` ");
          } catch (\PDOException $e2) {
              die("Database connection failed: " . $e2->getMessage());
          }
