@@ -3,30 +3,56 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#111110" />
+  <meta name="color-scheme" content="dark" />
+
+  <!-- SEO -->
+  <title>New School BJJ Brixton — Brazilian Jiu-Jitsu Academy</title>
+  <meta name="description" content="New School BJJ Brixton — Expert Brazilian Jiu-Jitsu instruction in the heart of Brixton, London. Led by World Champion Reiss Bailey. Classes for all levels." />
+  <meta name="keywords" content="BJJ, Brazilian Jiu-Jitsu, Brixton, London, martial arts, self-defense, Reiss Bailey, New School BJJ" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="New School BJJ Brixton — Brazilian Jiu-Jitsu Academy" />
+  <meta property="og:description" content="Expert BJJ instruction in Brixton, London. Led by World Champion Reiss Bailey. Classes for all levels." />
+  <meta property="og:image" content="/hero.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="New School BJJ Brixton" />
+  <meta name="twitter:description" content="Expert BJJ instruction in Brixton, London." />
+  <meta name="twitter:image" content="/hero.png" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="/logo.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New School BJJ Brixton — Transformative Resilience</title>
+  <link rel="apple-touch-icon" href="/logo.png" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts - optimized loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,700;1,900&display=swap"
-    rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,700;1,900&display=swap"
+    rel="stylesheet" />
 
-  <!-- FontAwesome 7 (Simulated via script or actual link if user has one, using FA 6 CDN as placeholder for logic if unknown) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Preload hero image -->
+  <link rel="preload" as="image" href="/hero.png" />
 </head>
 
 <body>
-  <!-- Global Noise Filter -->
-  <svg style="display: none;">
+  <!-- Noise texture filter -->
+  <svg style="display: none;" aria-hidden="true">
     <filter id="noise">
       <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
       <feColorMatrix type="saturate" values="0" />
     </filter>
   </svg>
-  <div class="noise-overlay" style="filter: url(#noise);"></div>
+  <div class="noise-overlay" style="filter: url(#noise);" aria-hidden="true"></div>
 
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
